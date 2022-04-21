@@ -1,14 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './images/header/header-logo.svg';
+//import './index.css';
 
 function App() {
   return (
     <div className="page">
-      
       <header className="header page__header">
-        <img className="header__logo" src="<%=require('./images/header/header-logo.svg')%>" alt="Логотип Mesto, подпись Россия."/>
+        <img className="header__logo" src={logo} alt="Логотип Mesto, подпись Россия."/>
       </header>
-
       <main className="content">
         <section className="profile content__profile">
           <div className="profile__box">
@@ -26,17 +24,14 @@ function App() {
           </div>
           <button className="profile__add-button" type="button" aria-label="Добавить место."></button>
         </section>
-
         <section className="elements content__elements">
           <ul className="elements__list">
           </ul>
         </section>
       </main>
-
       <footer className="footer page__footer">
         <p className="footer__copyright">&copy; 2022 Николай Петровский</p>
       </footer>
-
       <section className="popup popup_type_profile">
         <div className="popup__container">
           <button className="popup__button-close" type="button" aria-label="Закрыть окно."></button>
@@ -50,7 +45,6 @@ function App() {
           </form>
         </div>
       </section>
-
       <section className="popup popup_type_avatar">
         <div className="popup__container-avatar">
           <button className="popup__button-close" type="button" aria-label="Закрыть окно."></button>
@@ -62,7 +56,6 @@ function App() {
           </form>
         </div>
       </section>
-
       <section className="popup popup_type_mesto">
         <div className="popup__container">
           <button className="popup__button-close" type="button" aria-label="Закрыть окно."></button>
@@ -76,7 +69,6 @@ function App() {
           </form>
         </div>
       </section>
-
       <section className="popup popup_type_image">
         <div className="popup__preview">
           <button className="popup__button-close" type="button" aria-label="Закрыть окно."></button>
@@ -84,7 +76,6 @@ function App() {
           <h2 className="popup__caption">Архыз</h2>
         </div>
       </section>
-
       <section className="popup popup_type_confirm">
         <div className="popup__field">
           <button className="popup__button-close" type="button" aria-label="Закрыть окно."></button>
@@ -94,7 +85,6 @@ function App() {
           </form>
         </div>
       </section>
-
       <template className="template">
           <li className="element elements__item">
             <img className="element__card" src=" " alt="Тут скоро будет картинка"/>
