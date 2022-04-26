@@ -1,5 +1,4 @@
 @import url(./vendor/normalize.css);
-
 @import url(./vendor/fonts/Inter/inter.css);
 @import url(./blocks/body/body.css);
 @import url(./blocks/page/page.css);
@@ -41,8 +40,13 @@
 @import url(./blocks/popup/__input/_field/popup__input_field_avatar.css);
 @import url(./blocks/popup/_type/popup_type_mesto.css);
 @import url(./blocks/popup/_opened/popup_opened.css);
-@import url(./blocks/popup/__container/popup__container.css);
-@import url(./blocks/popup/__form/popup__form.css);
+@import url(./blocks/popup/_closed/popup_closed.css);
+@import url(./blocks/popup/__container-profile/popup__container-profile.css);
+@import url(./blocks/popup/__container-mesto/popup__container-mesto.css);
+@import url(./blocks/popup/__form-profile/popup__form-profile.css);
+@import url(./blocks/popup/__form-mesto/popup__form-mesto.css);
+@import url(./blocks/popup/__form-avatar/popup__form-avatar.css);
+@import url(./blocks/popup/__form-confirm/popup__form-confirm.css);
 @import url(./blocks/popup/__button-close/popup__button-close.css);
 @import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/__input/popup__input.css);
@@ -60,5 +64,5 @@
 @import url(./blocks/popup/__input-error/_active/popup__input-error_active.css);
 @import url(./blocks/popup/__button-save/_inactive/popup__button-save_inactive.css);
 @import url(./blocks/popup/_type/popup_type_confirm.css);
-@import url(./blocks/popup/__field/popup__field.css);
+@import url(./blocks/popup/__container-confirm/popup__container-confirm.css);
 @import url(./blocks/popup/__button-confirm/popup__button-confirm.css);
