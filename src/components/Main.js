@@ -1,34 +1,26 @@
 import React from "react";
 import api from "../utils/Api";
+import Card from "./Card";
+
 function Main(props) {
 
   let [userName, setUserName] = React.useState('');
   let [userDescription, setuserDescription] = React.useState('');
   let [userAvatar, setuserAvatar] = React.useState('');
+  let [cards, setCards] = React.useState([]);
 
+  
   React.useEffect(() => {
-      api
-      .getUserInfo()
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(res => {
-        console.log(res)
-        setUserName(res.name)
-        setuserDescription(res.about)
-        setuserAvatar(res.avatar)
-        // userInfo.setUserInfo(res.name, res.about)
-        // userInfo.setUserAvatar(res.avatar)        
+        setUserName(res[0].name)
+        setuserDescription(res[0].about)
+        setuserAvatar(res[0].avatar)
+        setCards(res[1])
       })
       .catch(console.log)
     }, []);
 
-
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  // .then(res => {
-  //   userInfo.setUserInfo(res[0].name, res[0].about)
-  //   userInfo.setUserAvatar(res[0].avatar)
-  //   userId = res[0]._id;
-  //   section.renderItems(res[1]);
-  // })
-  // .catch(console.log)
  
   return (
     <main className="content">
@@ -50,6 +42,11 @@ function Main(props) {
       </section>
       <section className="elements content__elements">
         <ul className="elements__list">
+          {
+            cards.map(item =>
+              <Card card={item} />
+          )
+          }
         </ul>
       </section>
     </main>
