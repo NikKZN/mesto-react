@@ -76,7 +76,7 @@ function App() {
 
       <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name={'avatar'} title={'Обновить аватар'} button={'Сохранить'} children={
         <>
-          <input className="popup__input popup__input_field_avatar" id="avatar-input" type="url" name="link" defaultValue="" placeholder="Сс тылка на аватар" required/>
+          <input className="popup__input popup__input_field_avatar" id="avatar-input" type="url" name="link" defaultValue="" placeholder="Ссылка на аватар" required/>
           <span className="popup__input-error avatar-input-error"></span>
         </>
       }/>
