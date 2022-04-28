@@ -5,21 +5,21 @@ import Card from "./Card";
 function Main(props) {
 
   let [userName, setUserName] = React.useState('');
-  let [userDescription, setuserDescription] = React.useState('');
-  let [userAvatar, setuserAvatar] = React.useState('');
+  let [userDescription, setUserDescription] = React.useState('');
+  let [userAvatar, setUserAvatar] = React.useState('');
   let [cards, setCards] = React.useState([]);
 
   
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(res => {
-        setUserName(res[0].name)
-        setuserDescription(res[0].about)
-        setuserAvatar(res[0].avatar)
-        setCards(res[1])
-      })
+      .then(([user, cards]) => {
+        setUserName(user.name);
+        setUserDescription(user.about);
+        setUserAvatar(user.avatar);
+        setCards(cards);
+      })      
       .catch(console.log)
-    }, []);
+  }, []);
 
  
   return (
@@ -43,9 +43,11 @@ function Main(props) {
       <section className="elements content__elements">
         <ul className="elements__list">
           {
-            cards.map(item =>
-              <Card card={item} />
-          )
+            cards.map(item => {
+              return (
+              <Card key={item._id} card={item} onCardClick={props.onCardClick} />
+              )
+            })
           }
         </ul>
       </section>
