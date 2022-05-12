@@ -65,17 +65,12 @@ class Api {
   }
 
   //---Отображение количества лайков карточки
-  deleteLike(id) {
+  changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(result);
-  }
-
-  addLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: this._headers,
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
+      headers: {
+        authorization: this._headers.authorization
+      }
     }).then(result);
   }
 }

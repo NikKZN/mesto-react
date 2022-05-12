@@ -18,6 +18,10 @@ function Card(props) {
     props.onCardClick(props.card);
   }
 
+  function handleLikeClick() {
+    props.onCardLike(props.card);
+  }
+
   return (
     <li className="element elements__item">
       <div
@@ -35,6 +39,7 @@ function Card(props) {
         <div>
           <button
             className={cardLikeButtonClassName}
+            onClick={handleLikeClick}
             type="button"
             aria-label="Нравится."
           ></button>
