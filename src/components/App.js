@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -19,6 +20,33 @@ function App() {
     name: "",
   });
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        setCards(cards);
+      })
+      .catch(console.log);
+  }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
+      });
+  }
+
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((c) => (c._id !== card._id)));
+      })
+  }
 
   React.useEffect(() => {
     api
@@ -38,8 +66,8 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setUserInfo(data.name, data.about).then(newData => {
-      setCurrentUser(newData);
+    api.setUserInfo(data.name, data.about).then(newUser => {
+      setCurrentUser(newUser);
       closeAllPopups();
     });
   }
@@ -47,6 +75,13 @@ function App() {
   function handleUpdateAvatar(data) {
     api.changeUserAvatar(data.avatar).then(newAvatar => {
       setCurrentUser(newAvatar);
+      closeAllPopups();
+    })
+  }
+
+  function handleAddPlace(data) {
+    api.addCard(data.name, data.link).then(newCard => {
+      setCards([newCard, ...cards]);
       closeAllPopups();
     })
   }
@@ -83,6 +118,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
@@ -92,38 +130,10 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          name={"mesto"}
-          title={"Новое место"}
-          button={"Создать"}
-          children={
-            <>
-              <input
-                className="popup__input popup__input_field_mesto"
-                id="mesto-input"
-                type="text"
-                name="mesto"
-                minLength="2"
-                maxLength="30"
-                defaultValue=""
-                placeholder="Название"
-                required
-              />
-              <span className="popup__input-error mesto-input-error"></span>
-              <input
-                className="popup__input popup__input_field_link"
-                id="link-input"
-                type="url"
-                name="link"
-                defaultValue=""
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span className="popup__input-error link-input-error"></span>
-            </>
-          }
+          onAddPlace={handleAddPlace}          
         />
 
         <EditAvatarPopup
