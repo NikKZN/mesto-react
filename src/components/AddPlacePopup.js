@@ -1,17 +1,16 @@
-import PopupWithForm from "./PopupWithForm"
+import PopupWithForm from "./PopupWithForm";
 import React, { useState, useEffect } from "react";
 
 function AddPlacePopup(props) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
 
-  
   function handleAddPlaceSubmit(e) {
-    e.preventDefault();  
-    props.onAddPlace({name, link});
+    e.preventDefault();
+    props.onAddPlace({ name, link });
   }
 
-  function handleChangeName(e){
+  function handleChangeName(e) {
     setName(e.target.value);
   }
 
@@ -20,8 +19,8 @@ function AddPlacePopup(props) {
   }
 
   useEffect(() => {
-    setName('');
-    setLink('');
+    setName("");
+    setLink("");
   }, [props.isOpen]);
 
   return (
@@ -61,7 +60,7 @@ function AddPlacePopup(props) {
         </>
       }
     />
-  )
+  );
 }
 
 export default AddPlacePopup;

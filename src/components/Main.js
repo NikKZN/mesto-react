@@ -1,37 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import api from "../utils/api";
+import React, { useContext } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const currentUser = useContext(CurrentUserContext);
-  // const [cards, setCards] = useState([]);
-
-  // useEffect(() => {
-  //   api
-  //     .getInitialCards()
-  //     .then((cards) => {
-  //       setCards(cards);
-  //     })
-  //     .catch(console.log);
-  // }, []);
-
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some((i) => i._id === currentUser._id);
-  //   api
-  //     .changeLikeCardStatus(card._id, !isLiked)
-  //     .then((newCard) => {
-  //       setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
-  //     });
-  // }
-
-  // function handleCardDelete(card) {
-  //   api
-  //     .deleteCard(card._id)
-  //     .then(() => {
-  //       setCards((cards) => cards.filter((c) => (c._id !== card._id)));
-  //     })
-  // }
 
   return (
     <main className="content">
@@ -76,7 +48,7 @@ function Main(props) {
                 card={item}
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}
-                onCardDelete={props.onCardDelete}
+                onCardConfirmDelete={props.onCardConfirmDelete}
               />
             );
           })}

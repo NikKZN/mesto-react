@@ -3,18 +3,16 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card(props) {
   const currentUser = useContext(CurrentUserContext);
-  
   const isOwn = props.card.owner._id === currentUser._id;
-  const cardDeleteButtonClassName = (
-    `element__trash ${isOwn ? '' : 'element__trash_hidden'}`
-  );
+  const cardDeleteButtonClassName = `element__trash ${
+    isOwn ? "" : "element__trash_hidden"
+  }`;
+  const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
+  const cardLikeButtonClassName = `element__caption-like ${
+    isLiked ? "element__caption-like_aktive" : ""
+  }`;
 
-  const isLiked = props.card.likes.some(i => i._id === currentUser._id);
-  const cardLikeButtonClassName = (
-    `element__caption-like ${isLiked ? 'element__caption-like_aktive' : ''}`
-  );
-
-  function handleClick() {
+  function handleCardClick() {
     props.onCardClick(props.card);
   }
 
@@ -22,21 +20,22 @@ function Card(props) {
     props.onCardLike(props.card);
   }
 
-  function handleDeleteClick() {
-    props.onCardDelete(props.card)
+  function handleDeleteConfirmClick() {
+    //props.onCardDelete(props.card);  
+     props.onCardConfirmDelete(props.card)
   }
 
   return (
     <li className="element elements__item">
       <div
         className="element__card"
-        onClick={handleClick}
+        onClick={handleCardClick}
         style={{ backgroundImage: `url(${props.card.link})` }}
       />
       <button
         className={cardDeleteButtonClassName}
-        onClick={handleDeleteClick}
-        type="button"
+        onClick={handleDeleteConfirmClick}
+         type="button"
         aria-label="Удалить."
       ></button>
       <div className="element__caption">
