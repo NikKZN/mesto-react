@@ -27,6 +27,7 @@ function AddPlacePopup(props) {
     <PopupWithForm
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onCloseOverlay={props.onCloseOverlay}
       onSubmit={handleAddPlaceSubmit}
       name={"mesto"}
       title={"Новое место"}

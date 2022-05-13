@@ -10,6 +10,7 @@ function ConfirmDeletePopup(props) {
     <PopupWithForm
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onCloseOverlay={props.onCloseOverlay}
       onSubmit={handleConfirmDeleteSubmit}
       name={"confirm"}
       title={"Вы уверены?"}

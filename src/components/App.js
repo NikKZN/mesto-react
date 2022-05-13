@@ -42,11 +42,14 @@ function App() {
   }
 
   function handleCardDelete() {
-    api.deleteCard(selectedDeleteCard._id).then(() => {
-      setCards((cards) =>
-        cards.filter((c) => c._id !== selectedDeleteCard._id)
-      );
-    });
+    api
+      .deleteCard(selectedDeleteCard._id)
+      .then(() => {
+        setCards((cards) =>
+          cards.filter((c) => c._id !== selectedDeleteCard._id)
+        );
+      })
+      .catch(console.log);
     closeAllPopups();
   }
 
@@ -59,10 +62,13 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setUserInfo(data.name, data.about).then((newUser) => {
-      setCurrentUser(newUser);
-      closeAllPopups();
-    });
+    api
+      .setUserInfo(data.name, data.about)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch(console.log);
   }
 
   function handleUpdateAvatar(data) {
@@ -108,6 +114,12 @@ function App() {
     });
   }
 
+  function closeOnOverlay(e) {
+    if (e.target === e.currentTarget) {
+      closeAllPopups();
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -128,29 +140,37 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onCloseOverlay={closeOnOverlay}
           onUpdateUser={handleUpdateUser}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          onCloseOverlay={closeOnOverlay}
           onAddPlace={handleAddPlace}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          onCloseOverlay={closeOnOverlay}
           onUpdateAvatar={handleUpdateAvatar}
         />
 
         <ConfirmDeletePopup
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
+          onCloseOverlay={closeOnOverlay}
           onConfirmDelete={handleConfirmDelete}
           onDeleteCard={handleCardDelete}
         />
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
+          onCloseOverlay={closeOnOverlay}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
