@@ -114,11 +114,21 @@ function App() {
     });
   }
 
-  function closeOnOverlay(e) {
+  function closePopupOnOverlay(e) {
     if (e.target === e.currentTarget) {
       closeAllPopups();
     }
   }
+
+  useEffect(() => {
+    function closePopupOnEsc(e) {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener("keydown", closePopupOnEsc);
+    return () => document.removeEventListener("keydown", closePopupOnEsc);
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -140,28 +150,28 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onCloseOverlay={closeOnOverlay}
+          onCloseOverlay={closePopupOnOverlay}
           onUpdateUser={handleUpdateUser}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onCloseOverlay={closeOnOverlay}
+          onCloseOverlay={closePopupOnOverlay}
           onAddPlace={handleAddPlace}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onCloseOverlay={closeOnOverlay}
+          onCloseOverlay={closePopupOnOverlay}
           onUpdateAvatar={handleUpdateAvatar}
         />
 
         <ConfirmDeletePopup
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
-          onCloseOverlay={closeOnOverlay}
+          onCloseOverlay={closePopupOnOverlay}
           onConfirmDelete={handleConfirmDelete}
           onDeleteCard={handleCardDelete}
         />
@@ -169,7 +179,7 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
-          onCloseOverlay={closeOnOverlay}
+          onCloseOverlay={closePopupOnOverlay}
         />
       </div>
     </CurrentUserContext.Provider>
