@@ -4,6 +4,7 @@ function ImagePopup(props) {
       className={`popup popup_type_image ${
         props.card.isOpen ? "popup_opened" : ""
       }`}
+      onClick={props.onCloseOverlay}
     >
       <div className="popup__preview">
         <button

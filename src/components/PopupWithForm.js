@@ -4,6 +4,7 @@ function PopupWithForm(props) {
       className={`popup popup_type_${props.name} ${
         props.isOpen ? "popup_opened" : ""
       }`}
+      onClick={props.onCloseOverlay}
     >
       <div className={`popup__container-${props.name}`}>
         <button
@@ -12,7 +13,11 @@ function PopupWithForm(props) {
           type="button"
           aria-label="Закрыть окно."
         ></button>
-        <form className={`popup__form-${props.name}`} noValidate>
+        <form
+          className={`popup__form-${props.name}`}
+          onSubmit={props.onSubmit}
+          noValidate
+        >
           <h2 className="popup__title">{props.title}</h2>
           {props.children}
           <button
@@ -20,7 +25,7 @@ function PopupWithForm(props) {
             type="submit"
             aria-label="Сохранить."
           >
-            {props.button}
+            {props.isLoading ? props.buttonLoading : props.button}
           </button>
         </form>
       </div>
