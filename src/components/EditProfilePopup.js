@@ -4,12 +4,12 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [about, setAbout] = useState("");
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     setName(currentUser.name);
-    setDescription(currentUser.about);
+    setAbout(currentUser.about);
   }, [currentUser]);
 
   function handleNameChange(e) {
@@ -17,14 +17,14 @@ function EditProfilePopup(props) {
   }
 
   function handleDescriptionChange(e) {
-    setDescription(e.target.value);
+    setAbout(e.target.value);
   }
 
   function handleEditProfileSubmit(e) {
     e.preventDefault();
     props.onUpdateUser({
       name,
-      about: description,
+      about,
     });
   }
 
@@ -51,6 +51,7 @@ function EditProfilePopup(props) {
             placeholder="Ваше имя"
             minLength="2"
             maxLength="40"
+            value={name ?? ""}
             required
           />
           <span className="popup__input-error name-input-error"></span>
@@ -64,6 +65,7 @@ function EditProfilePopup(props) {
             placeholder="О себе"
             minLength="2"
             maxLength="200"
+            value={about ?? ""}
             required
           />
           <span className="popup__input-error job-input-error"></span>

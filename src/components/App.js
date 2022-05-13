@@ -37,9 +37,14 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch(console.log);
   }
 
   function handleCardDelete() {
@@ -72,11 +77,11 @@ function App() {
       .setUserInfo(data.name, data.about)
       .then((newUser) => {
         setCurrentUser(newUser);
+        closeAllPopups();
       })
       .catch(console.log)
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       });
   }
 
@@ -86,11 +91,11 @@ function App() {
       .changeUserAvatar(data.avatar)
       .then((newAvatar) => {
         setCurrentUser(newAvatar);
+        closeAllPopups();
       })
       .catch(console.log)
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       });
   }
 
@@ -100,11 +105,11 @@ function App() {
       .addCard(data.name, data.link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        closeAllPopups();
       })
       .catch(console.log)
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       });
   }
 

@@ -8,6 +8,7 @@ function AddPlacePopup(props) {
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
     props.onAddPlace({ name, link });
+    e.target.reset();
   }
 
   function handleChangeName(e) {
@@ -46,6 +47,7 @@ function AddPlacePopup(props) {
             defaultValue=""
             placeholder="Название"
             onChange={handleChangeName}
+            value={name ?? ""}
             required
           />
           <span className="popup__input-error mesto-input-error"></span>
@@ -57,6 +59,7 @@ function AddPlacePopup(props) {
             defaultValue=""
             placeholder="Ссылка на картинку"
             onChange={handleChangeLink}
+            value={link ?? ""}
             required
           />
           <span className="popup__input-error link-input-error"></span>
