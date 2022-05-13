@@ -12,9 +12,11 @@ function ConfirmDeletePopup(props) {
       onClose={props.onClose}
       onCloseOverlay={props.onCloseOverlay}
       onSubmit={handleConfirmDeleteSubmit}
+      isLoading={props.isLoading}
       name={"confirm"}
       title={"Вы уверены?"}
       button={"Да"}
+      buttonLoading={"Удаление..."}
     />
   );
 }

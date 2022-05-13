@@ -25,7 +25,7 @@ function PopupWithForm(props) {
             type="submit"
             aria-label="Сохранить."
           >
-            {props.button}
+            {props.isLoading ? props.buttonLoading : props.button}
           </button>
         </form>
       </div>

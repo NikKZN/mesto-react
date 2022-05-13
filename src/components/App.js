@@ -24,6 +24,7 @@ function App() {
   const [selectedDeleteCard, setSelectedDeleteCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -42,6 +43,7 @@ function App() {
   }
 
   function handleCardDelete() {
+    setIsLoading(true);
     api
       .deleteCard(selectedDeleteCard._id)
       .then(() => {
@@ -49,8 +51,11 @@ function App() {
           cards.filter((c) => c._id !== selectedDeleteCard._id)
         );
       })
-      .catch(console.log);
-    closeAllPopups();
+      .catch(console.log)
+      .finally(() => {
+        setIsLoading(false);
+        closeAllPopups();
+      });
   }
 
   function handleCardClick(card) {
@@ -62,27 +67,45 @@ function App() {
   }
 
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api
       .setUserInfo(data.name, data.about)
       .then((newUser) => {
         setCurrentUser(newUser);
-        closeAllPopups();
       })
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => {
+        setIsLoading(false);
+        closeAllPopups();
+      });
   }
 
   function handleUpdateAvatar(data) {
-    api.changeUserAvatar(data.avatar).then((newAvatar) => {
-      setCurrentUser(newAvatar);
-      closeAllPopups();
-    });
+    setIsLoading(true);
+    api
+      .changeUserAvatar(data.avatar)
+      .then((newAvatar) => {
+        setCurrentUser(newAvatar);
+      })
+      .catch(console.log)
+      .finally(() => {
+        setIsLoading(false);
+        closeAllPopups();
+      });
   }
 
   function handleAddPlace(data) {
-    api.addCard(data.name, data.link).then((newCard) => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    });
+    setIsLoading(true);
+    api
+      .addCard(data.name, data.link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .catch(console.log)
+      .finally(() => {
+        setIsLoading(false);
+        closeAllPopups();
+      });
   }
 
   function handleEditAvatarClick() {
@@ -152,6 +175,7 @@ function App() {
           onClose={closeAllPopups}
           onCloseOverlay={closePopupOnOverlay}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
 
         <AddPlacePopup
@@ -159,6 +183,7 @@ function App() {
           onClose={closeAllPopups}
           onCloseOverlay={closePopupOnOverlay}
           onAddPlace={handleAddPlace}
+          isLoading={isLoading}
         />
 
         <EditAvatarPopup
@@ -166,6 +191,7 @@ function App() {
           onClose={closeAllPopups}
           onCloseOverlay={closePopupOnOverlay}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
 
         <ConfirmDeletePopup
@@ -174,6 +200,7 @@ function App() {
           onCloseOverlay={closePopupOnOverlay}
           onConfirmDelete={handleConfirmDelete}
           onDeleteCard={handleCardDelete}
+          isLoading={isLoading}
         />
 
         <ImagePopup

@@ -3,7 +3,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const currentUser = useContext(CurrentUserContext);
@@ -35,9 +34,11 @@ function EditProfilePopup(props) {
       onClose={props.onClose}
       onCloseOverlay={props.onCloseOverlay}
       onSubmit={handleEditProfileSubmit}
+      isLoading={props.isLoading}
       name={"profile"}
       title={"Редактировать профиль"}
       button={"Сохранить"}
+      buttonLoading={"Сохранение..."}
       children={
         <>
           <input

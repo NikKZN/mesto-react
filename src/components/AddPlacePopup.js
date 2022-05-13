@@ -29,9 +29,11 @@ function AddPlacePopup(props) {
       onClose={props.onClose}
       onCloseOverlay={props.onCloseOverlay}
       onSubmit={handleAddPlaceSubmit}
+      isLoading={props.isLoading}
       name={"mesto"}
       title={"Новое место"}
       button={"Создать"}
+      buttonLoading={"Создание..."}
       children={
         <>
           <input
