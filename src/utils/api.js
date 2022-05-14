@@ -1,17 +1,19 @@
-const result = (res) =>
-  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
-
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
+  _checkReponse() {
+    return (res) =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   //---Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Смена аватара
@@ -22,14 +24,14 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Загрузка карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Редактирование профиля
@@ -41,7 +43,7 @@ class Api {
         name,
         about,
       }),
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Добавление новой карточки
@@ -53,7 +55,7 @@ class Api {
         name,
         link,
       }),
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Удаление карточки
@@ -61,17 +63,17 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(result);
+    }).then(this._checkReponse());
   }
 
   //---Отображение количества лайков карточки
   changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: `${isLiked ? 'PUT' : 'DELETE'}`,
+      method: `${isLiked ? "PUT" : "DELETE"}`,
       headers: {
-        authorization: this._headers.authorization
-      }
-    }).then(result);
+        authorization: this._headers.authorization,
+      },
+    }).then(this._checkReponse());
   }
 }
 
