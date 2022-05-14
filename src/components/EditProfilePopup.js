@@ -10,7 +10,7 @@ function EditProfilePopup(props) {
   useEffect(() => {
     setName(currentUser.name);
     setAbout(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -39,39 +39,34 @@ function EditProfilePopup(props) {
       title={"Редактировать профиль"}
       button={"Сохранить"}
       buttonLoading={"Сохранение..."}
-      children={
-        <>
-          <input
-            className="popup__input popup__input_field_name"
-            id="name-input"
-            type="text"
-            name="name"
-            onChange={handleNameChange}
-            defaultValue=""
-            placeholder="Ваше имя"
-            minLength="2"
-            maxLength="40"
-            value={name ?? ""}
-            required
-          />
-          <span className="popup__input-error name-input-error"></span>
-          <input
-            className="popup__input popup__input_field_job"
-            id="job-input"
-            type="text"
-            name="about"
-            onChange={handleDescriptionChange}
-            defaultValue=""
-            placeholder="О себе"
-            minLength="2"
-            maxLength="200"
-            value={about ?? ""}
-            required
-          />
-          <span className="popup__input-error job-input-error"></span>
-        </>
-      }
-    />
+    >
+      <input
+        className="popup__input popup__input_field_name"
+        id="name-input"
+        type="text"
+        name="name"
+        onChange={handleNameChange}
+        placeholder="Ваше имя"
+        minLength="2"
+        maxLength="40"
+        value={name ?? ""}
+        required
+      />
+      <span className="popup__input-error name-input-error"></span>
+      <input
+        className="popup__input popup__input_field_job"
+        id="job-input"
+        type="text"
+        name="about"
+        onChange={handleDescriptionChange}
+        placeholder="О себе"
+        minLength="2"
+        maxLength="200"
+        value={about ?? ""}
+        required
+      />
+      <span className="popup__input-error job-input-error"></span>
+    </PopupWithForm>
   );
 }
 

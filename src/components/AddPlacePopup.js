@@ -8,7 +8,6 @@ function AddPlacePopup(props) {
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
     props.onAddPlace({ name, link });
-    e.target.reset();
   }
 
   function handleChangeName(e) {
@@ -35,37 +34,32 @@ function AddPlacePopup(props) {
       title={"Новое место"}
       button={"Создать"}
       buttonLoading={"Создание..."}
-      children={
-        <>
-          <input
-            className="popup__input popup__input_field_mesto"
-            id="mesto-input"
-            type="text"
-            name="mesto"
-            minLength="2"
-            maxLength="30"
-            defaultValue=""
-            placeholder="Название"
-            onChange={handleChangeName}
-            value={name ?? ""}
-            required
-          />
-          <span className="popup__input-error mesto-input-error"></span>
-          <input
-            className="popup__input popup__input_field_link"
-            id="link-input"
-            type="url"
-            name="link"
-            defaultValue=""
-            placeholder="Ссылка на картинку"
-            onChange={handleChangeLink}
-            value={link ?? ""}
-            required
-          />
-          <span className="popup__input-error link-input-error"></span>
-        </>
-      }
-    />
+    >
+      <input
+        className="popup__input popup__input_field_mesto"
+        id="mesto-input"
+        type="text"
+        name="mesto"
+        minLength="2"
+        maxLength="30"
+        placeholder="Название"
+        onChange={handleChangeName}
+        value={name ?? ""}
+        required
+      />
+      <span className="popup__input-error mesto-input-error"></span>
+      <input
+        className="popup__input popup__input_field_link"
+        id="link-input"
+        type="url"
+        name="link"
+        placeholder="Ссылка на картинку"
+        onChange={handleChangeLink}
+        value={link ?? ""}
+        required
+      />
+      <span className="popup__input-error link-input-error"></span>
+    </PopupWithForm>
   );
 }
 

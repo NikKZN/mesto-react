@@ -25,6 +25,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isOpen =
+    isEditAvatarPopupOpen ||
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    selectedCard;
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -32,7 +37,7 @@ function App() {
         setCurrentUser(user);
         setCards(cards);
       })
-      .catch(console.log);
+      .catch(alert);
   }, []);
 
   function handleCardLike(card) {
@@ -44,7 +49,7 @@ function App() {
           cards.map((c) => (c._id === card._id ? newCard : c))
         );
       })
-      .catch(console.log);
+      .catch(alert);
   }
 
   function handleCardDelete() {
@@ -55,11 +60,11 @@ function App() {
         setCards((cards) =>
           cards.filter((c) => c._id !== selectedDeleteCard._id)
         );
+        closeAllPopups();
       })
-      .catch(console.log)
+      .catch(alert)
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       });
   }
 
@@ -79,7 +84,7 @@ function App() {
         setCurrentUser(newUser);
         closeAllPopups();
       })
-      .catch(console.log)
+      .catch(alert)
       .finally(() => {
         setIsLoading(false);
       });
@@ -93,7 +98,7 @@ function App() {
         setCurrentUser(newAvatar);
         closeAllPopups();
       })
-      .catch(console.log)
+      .catch(alert)
       .finally(() => {
         setIsLoading(false);
       });
@@ -107,7 +112,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch(console.log)
+      .catch(alert)
       .finally(() => {
         setIsLoading(false);
       });
@@ -154,9 +159,13 @@ function App() {
         closeAllPopups();
       }
     }
-    document.addEventListener("keydown", closePopupOnEsc);
-    return () => document.removeEventListener("keydown", closePopupOnEsc);
-  }, []);
+    if (isOpen) {
+      document.addEventListener("keydown", closePopupOnEsc);
+      return () => {
+        document.removeEventListener("keydown", closePopupOnEsc);
+      };
+    }
+  }, [isOpen]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
