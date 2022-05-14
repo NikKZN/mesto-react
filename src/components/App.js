@@ -29,7 +29,8 @@ function App() {
     isEditAvatarPopupOpen ||
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
-    selectedCard;
+    isConfirmDeletePopupOpen ||
+    selectedCard.isOpen;
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
